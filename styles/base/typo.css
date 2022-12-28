@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Righteous&display=swap');
+
+*, *::before, *::after, select, option, input, textarea, button, label {
+    font-family: 'Jost', sans-serif;
+    /*font-family: 'Righteous', cursive;*/
+}

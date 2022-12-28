@@ -1,0 +1,26 @@
+:root {
+    /* COLORS */
+    --soft-dark: #26547c;
+    --dark: #002c46;
+    --light: #FEFEFE;
+    --success: #78bf68;
+    --success-dark: #006858;
+    --danger: #ef476f;
+    --warning: #ffb800;
+    --orange: #fd8500;
+    --purple: #540d6e;
+
+    /* MARGIN AND PADDING */
+    --margin-xs: .6rem;
+    --margin-sm: 1rem;
+    --margin-md: 1.5rem;
+    --margin-lg: 2rem;
+    --margin-xl: 3rem;
+    --margin-xxl: 5rem;
+
+    --padding-xs: .6rem;
+    --padding-sm: 1rem;
+    --padding-md: 1.5rem;
+    --padding-lg: 2rem;
+    --padding-xl: 3rem;
+}

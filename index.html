@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Game with questions getting from a Trivia API">
+    <meta name="keywords" content="Quiz, Game, Quiz Game, Trivia">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+    <title>Quiz Game | Trivia</title>
+</head>
+<body class="body">
+
+    <article class="heart-container">
+        <img src="./assets/img/heart.png" alt="Life: ">
+        <span class="life">3</span>
+    </article>
+
+    <header class="header">
+        <h1 class="title">Quiz Game</h1>
+    </header>
+    
+    <main class="main">
+        <h2 class="question_phrase diff_phrase">The chosen difficulty is <p class="word_to_resolve"></p></h2>
+        <section class="answer_container diff_cont">
+            <p tabindex="1" class="response easy">Easy</p>
+            <p tabindex="2" class="response medium">Medium</p>
+            <p tabindex="3" class="response hard">Hard</p>
+        </section>
+
+        <h2 class="question_phrase category_phrase d-none">The category selected is <p class="word_to_resolve"></p></h2>
+        <section class="answer_container category_cont">
+            <!--<p class="response">Response Text</p>-->
+        </section>
+    </main>
+    <canvas class="background"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+</body>
+</html>

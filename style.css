@@ -1,0 +1,14 @@
+/* IMPORT FILE STYLES */
+
+/* BASE */
+@import url(styles/base/reset.css);
+@import url(styles/base/typo.css);
+@import url(styles/base/vars.css);
+
+/* COMPONENTS */
+@import url(styles/components/cursor.css);
+@import url(styles/components/background.css);
+@import url(styles/components/header.css);
+@import url(styles/components/title.css);
+@import url(styles/components/main.css);
+@import url(styles/components/question.css);

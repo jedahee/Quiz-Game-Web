@@ -1,0 +1,108 @@
+.question_phrase {
+    color: var(--light);
+    font-size: 2.5em;
+    font-weight: 400;
+    display: flex;
+    width: max-content;
+    transition: all 1s ease;
+}
+
+.word_to_resolve {
+    width: max-content;
+    min-width: 5ch;
+    color: var(--success);
+    min-width: 5ch;
+    margin-left: var(--margin-sm);
+    border-bottom: 2px solid var(--light);
+    height: 52px;
+    text-align: center;
+    transition: all .2s ease;
+}
+
+.answer_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 220px));
+    gap: var(--margin-md);
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 50%;
+    margin-top: var(--margin-xxl);
+    transition: opacity 1s .2s ease, transform 1s .2s ease;
+}
+
+.answer_container.hidden {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+.response {
+    color: var(--light);
+    font-weight: 400;
+    letter-spacing: .5px;
+    font-size: 1.3em;
+    text-align: center;
+    position: relative;
+    border: 2px solid var(--soft-dark);
+    z-index: 99;
+    padding: 0 var(--padding-md);
+    transition: transform .2s ease, background-color .4s ease;
+}
+
+.success {
+    background-color: var(--success);
+    transform: scale(1.2);
+    pointer-events: none;
+}
+
+.success::after {
+    background-color: var(--success) !important;
+}
+
+.error {
+    background-color: var(--danger);
+    transform: scale(.8);
+    pointer-events: none;
+}
+
+.error::after {
+    background-color: var(--danger) !important;
+}
+
+.response::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    transition: transform .2s ease, background-color .4s ease;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    background-color: #000;
+    height: 100%;
+    z-index: -1;
+    width: 100%;
+    transform-origin: right;
+}
+
+.response:hover, .response:focus {
+    transform: scale(1.2);
+}
+
+.response:hover::after, .response:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+
+}
+
+.question_phrase.small {
+    font-size: 2em;
+}
+
+.question_phrase.d-none, .response.hidden {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}

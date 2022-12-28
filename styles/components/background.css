@@ -1,0 +1,15 @@
+
+body {
+    height: 100vh;
+    background-color: var(--dark) !important;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    background-color: var(--dark) !important;
+    top: 0;
+    display: block;
+    left: 0;
+    z-index: -1;
+}

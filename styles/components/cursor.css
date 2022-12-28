@@ -1,0 +1,27 @@
+* {
+    cursor: url(../../assets/img/point.png) 15 15, auto;
+}
+
+.div_around_cursor {
+    width: 30px;
+    height: 30px;
+    display: block;
+    border: 2px solid var(--light);
+    border-radius: 50%;
+    background-color: transparent;
+    position: absolute;
+    z-index: 2;
+    transition: top .6s ease-out, left .6s ease-out;
+    transform: translate(-55%, -55%);
+    animation: bound .7s alternate infinite;
+}
+
+@keyframes bound {
+    0% {
+        transform: translate(-55%, -55%) scale(1);
+    }
+
+    100% {
+        transform: translate(-55%, -55%) scale(.7);
+    }
+}
