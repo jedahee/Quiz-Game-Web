@@ -2,7 +2,8 @@
 body {
     height: 100vh;
     background-color: var(--dark) !important;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .background {

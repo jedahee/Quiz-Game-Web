@@ -5,7 +5,7 @@ var TIME_BETWEEN_ANIMATIONS = 50;
 var CATEGORIES = ["linux", "bash", "PHP", "docker", "HTML", "mySql", "wordPress", "laravel", "kubernetes", "javaScript", "devOps"];
 var CATEGORY = "";
 var QUESTIONS = [];
-var LIFE = 4;
+var LIFE = 5;
 var CURRENT_QUESTION = 0;
 var LIMIT = 0;
 
@@ -107,12 +107,16 @@ window.onload = function(e) {
     
     $medium.onclick = function (e) {
       LIMIT = 15;
+      LIFE = 4;
+      $life.textContent = LIFE;
       $total_no.textContent = LIMIT;
       return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); 
     };
     
     $hard.onclick = function (e) {
       LIMIT = 20;
+      LIFE = 3;
+      $life.textContent = LIFE;
       $total_no.textContent = LIMIT;
       return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); 
     };

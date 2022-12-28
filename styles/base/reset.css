@@ -10,3 +10,8 @@
 *::after, *::before {
     box-sizing: border-box;
 }
+
+*::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 10px;
+}
