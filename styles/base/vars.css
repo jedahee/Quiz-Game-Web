@@ -11,6 +11,7 @@
     --purple: #540d6e;
 
     /* MARGIN AND PADDING */
+    --margin-xxs: .3rem;
     --margin-xs: .6rem;
     --margin-sm: 1rem;
     --margin-md: 1.5rem;
@@ -18,6 +19,7 @@
     --margin-xl: 3rem;
     --margin-xxl: 5rem;
 
+    --padding-xxs: .3rem;
     --padding-xs: .6rem;
     --padding-sm: 1rem;
     --padding-md: 1.5rem;

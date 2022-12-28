@@ -13,9 +13,17 @@
 </head>
 <body class="body">
 
-    <article class="heart-container">
+    <article class="heart-container hidden">
         <img src="./assets/img/heart.png" alt="Life: ">
-        <span class="life">3</span>
+        <span class="life"></span>
+    </article>
+
+    <article class="no-questions-container hidden">
+        <p class="no">
+           <span class="current-no">2</span>
+           /
+           <span class="total-no">10</span> 
+        </p>
     </article>
 
     <header class="header">
@@ -34,6 +42,12 @@
         <section class="answer_container category_cont">
             <!--<p class="response">Response Text</p>-->
         </section>
+
+        <article class="game_container">
+            <h2 class="question_phrase api_phrase"></h2>
+            <section class="answer-container api_container">
+            </section>
+        </article>
     </main>
     <canvas class="background"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>

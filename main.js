@@ -5,6 +5,9 @@ var TIME_BETWEEN_ANIMATIONS = 50;
 var CATEGORIES = ["linux", "bash", "PHP", "docker", "HTML", "mySql", "wordPress", "laravel", "kubernetes", "javaScript", "devOps"];
 var CATEGORY = "";
 var QUESTIONS = [];
+var LIFE = 4;
+var CURRENT_QUESTION = 0;
+var LIMIT = 0;
 
 window.onload = function(e) {
     // Background animation
@@ -17,14 +20,14 @@ window.onload = function(e) {
         {
           breakpoint: 768,
           options: {
-            maxParticles: 85,
+            maxParticles: 65,
             connectParticles: true,
           },
         },
         {
             breakpoint: 550,
             options: {
-              maxParticles: 55,
+              maxParticles: 45,
               connectParticles: true,
             },
           },
@@ -58,8 +61,19 @@ window.onload = function(e) {
     var $diff_cont = document.querySelector(".diff_cont");
     var $category_phrase = document.querySelector(".category_phrase");
     var $category_cont = document.querySelector(".category_cont");
+    var $heart_container = document.querySelector(".heart-container");
+    var $life = document.querySelector(".life");
+    var $api_phrase = document.querySelector(".api_phrase");
+    var $api_container = document.querySelector(".api_container");
+    var $no_questions_container = document.querySelector(".no-questions-container");
+    var $current_no = document.querySelector(".current-no");
+    var $total_no = document.querySelector(".total-no");
 
-    // Fill categories container HTML
+    // Fill HTML elements
+    $life.textContent = LIFE;
+    $current_no.textContent = CURRENT_QUESTION+1;
+    $total_no.textContent = LIMIT;
+
     CATEGORIES.forEach(cat => {
       let first_letter = cat.charAt(0).toUpperCase();
       cat = cat.substring(1, cat.length)
@@ -75,7 +89,7 @@ window.onload = function(e) {
     var $responses = document.querySelectorAll(".category_cont > .response");
 
     $responses.forEach($res => {
-      $res.onclick = function (e) { return setCategory(this, $category_cont, $word_to_resolve_cat, $category_phrase) };
+      $res.onclick = function (e) { return setCategory(this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no) };
     });
     // Cursor animation
     let div_around_cursor = document.createElement("div");
@@ -85,9 +99,23 @@ window.onload = function(e) {
 
     // Events
     document.onmousemove = move_div_around_cursor;
-    $easy.onclick = function (e) {return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); }
-    $medium.onclick = function (e) {return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); };
-    $hard.onclick = function (e) {return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); };
+    $easy.onclick = function (e) {
+      LIMIT = 10;
+      $total_no.textContent = LIMIT;
+      return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); 
+    }
+    
+    $medium.onclick = function (e) {
+      LIMIT = 15;
+      $total_no.textContent = LIMIT;
+      return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); 
+    };
+    
+    $hard.onclick = function (e) {
+      LIMIT = 20;
+      $total_no.textContent = LIMIT;
+      return setDifficult(this, $hard, $medium, $easy, $word_to_resolve, $title, $header, $diff_phrase, $diff_cont, $category_phrase, $responses); 
+    };
 }
 
 // FUNCTIONS
@@ -124,31 +152,60 @@ function setDifficult($this, $hard, $medium, $easy, $word_to_resolve, $title, $h
   
 }
 
-function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phrase) {
+function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no) {
   CATEGORY = $this.textContent;
-  QUESTIONS = allQuestions()
   $word_to_resolve_cat.textContent = CATEGORY;
   $this.classList.add("success");
   $category_phrase.classList.add("small");
   $category_cont.classList.add("hidden");
+  $api_phrase.classList.remove("hidden");
 
-  setInterval((e) => {
+  // Async/Await getting quizzes
+  allQuestions().then(json => {
+    QUESTIONS = json;
+    
+    $api_phrase.textContent = QUESTIONS[CURRENT_QUESTION].question;
+    
+    let answers = QUESTIONS[CURRENT_QUESTION].answers;
+
+    Object.values(answers).forEach(answer => {
+      if (answer != null) {
+        let p = document.createElement("p");
+        p.textContent = answer;
+        p.classList.add("response");
+        p.onclick = function(e) {
+          return checkResponse($current_no);
+        };
+        $api_container.appendChild(p);
+      }
+    });
+
     $category_cont.style.display = "none";
+    $heart_container.classList.remove("hidden");
+    $no_questions_container.classList.remove("hidden");
 
-  }, 700);
+    
+  })
   
 }
 
-function allQuestions() {
+function checkResponse($current_no) {
+  console.log("llega!");
+  CURRENT_QUESTION++;
+  $current_no.textContent = CURRENT_QUESTION+1;
+}
+
+async function allQuestions() {
       // Solicitud GET (Request) from a quiz.
-      fetch('https://quizapi.io/api/v1/questions?difficult='+DIFFICULT+'&limit=10&tags=' + CATEGORY, {
+      var response = await fetch('https://quizapi.io/api/v1/questions?difficult='+DIFFICULT+'&limit=10&tags=' + CATEGORY, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-Api-Key': API_KEY,
         },
         
-      }).then(response => response.json())  // convertir a json
-      .then(json => {console.log(json) })    //imprimir los datos en la consola
-      .catch(err => console.log('Solicitud fallida', err)); // Capturar errores */
+      })
+      
+      let result = await response.json();
+      return result;
 }
