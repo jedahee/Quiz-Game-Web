@@ -20,7 +20,7 @@
     transition: all .2s ease;
 }
 
-.answer_container {
+.answer_container:not(.api_container) {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 220px));
     gap: var(--margin-md);
@@ -63,7 +63,7 @@
 
 .error {
     background-color: var(--danger);
-    transform: scale(.8);
+    transform: scale(1);
     pointer-events: none;
 }
 
@@ -137,10 +137,13 @@
     column-gap: inherit;
     width: 100%;
     row-gap: var(--margin-sm);
+    transition: all .7s ease;
 }
 
 .api_container > .response {
     width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
     text-align: center;
 }
 

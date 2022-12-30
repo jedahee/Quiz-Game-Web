@@ -65,13 +65,14 @@ window.onload = function(e) {
     var $life = document.querySelector(".life");
     var $api_phrase = document.querySelector(".api_phrase");
     var $api_container = document.querySelector(".api_container");
+    var $api_container_responses = document.querySelectorAll(".api_container > .response");
     var $no_questions_container = document.querySelector(".no-questions-container");
     var $current_no = document.querySelector(".current-no");
     var $total_no = document.querySelector(".total-no");
 
     // Fill HTML elements
     $life.textContent = LIFE;
-    $current_no.textContent = CURRENT_QUESTION+1;
+    $current_no.textContent = CURRENT_QUESTION;
     $total_no.textContent = LIMIT;
 
     CATEGORIES.forEach(cat => {
@@ -89,7 +90,7 @@ window.onload = function(e) {
     var $responses = document.querySelectorAll(".category_cont > .response");
 
     $responses.forEach($res => {
-      $res.onclick = function (e) { return setCategory(this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no) };
+      $res.onclick = function (e) { return setCategory(this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no, $api_container_responses, $life) };
     });
     // Cursor animation
     let div_around_cursor = document.createElement("div");
@@ -156,7 +157,7 @@ function setDifficult($this, $hard, $medium, $easy, $word_to_resolve, $title, $h
   
 }
 
-function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no) {
+function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phrase, $heart_container, $api_phrase, $api_container, $no_questions_container, $current_no, $api_container_responses, $life) {
   CATEGORY = $this.textContent;
   $word_to_resolve_cat.textContent = CATEGORY;
   $this.classList.add("success");
@@ -165,20 +166,20 @@ function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phra
   $api_phrase.classList.remove("hidden");
 
   // Async/Await getting quizzes
-  allQuestions().then(json => {
+  allQuestions(LIMIT).then(json => {
     QUESTIONS = json;
-    
+    console.log(json);
     $api_phrase.textContent = QUESTIONS[CURRENT_QUESTION].question;
     
     let answers = QUESTIONS[CURRENT_QUESTION].answers;
 
-    Object.values(answers).forEach(answer => {
-      if (answer != null) {
+    Object.keys(answers).forEach(answer => {
+      if (answers[answer] != null) {
         let p = document.createElement("p");
-        p.textContent = answer;
+        p.textContent = answers[answer];
         p.classList.add("response");
         p.onclick = function(e) {
-          return checkResponse($current_no);
+          return checkResponse(this, $api_container, $current_no, answer, QUESTIONS[CURRENT_QUESTION], $api_phrase, $api_container_responses, QUESTIONS, $api_container, $life);
         };
         $api_container.appendChild(p);
       }
@@ -193,15 +194,56 @@ function setCategory($this, $category_cont, $word_to_resolve_cat, $category_phra
   
 }
 
-function checkResponse($current_no) {
-  console.log("llega!");
-  CURRENT_QUESTION++;
-  $current_no.textContent = CURRENT_QUESTION+1;
+function checkResponse($this, $api_container, $current_no, answer, question, $api_phrase, $api_container_responses, QUESTIONS, $api_container, $life) {
+  let res = (question.correct_answers[answer+"_correct"] === 'true');
+  
+  if (res === true) {
+    $this.classList.add("success");
+  } else {
+    if (LIFE > 0) {
+      LIFE--;
+      $life.textContent = LIFE;
+    }
+    
+    $this.classList.add("error");
+  }
+
+  setTimeout((e) => {
+    $api_phrase.classList.add("hidden");
+    document.querySelector(".answer_container.api_container").classList.add("hidden");
+    CURRENT_QUESTION++;
+    $current_no.textContent = CURRENT_QUESTION;
+    
+  }, 150);
+
+
+  setTimeout((e) => {
+    $api_phrase.textContent = QUESTIONS[CURRENT_QUESTION].question;
+    let answers = QUESTIONS[CURRENT_QUESTION].answers;
+    $api_container.innerHTML = "";
+    Object.keys(answers).forEach(answer => {
+      if (answers[answer] != null) {
+        let p = document.createElement("p");
+        p.textContent = answers[answer];
+        p.classList.add("response");
+        
+        $api_container.appendChild(p);
+      }
+    });
+    document.querySelectorAll(".api_container > .response").forEach(p => {
+      p.onclick = function(e) {
+        return checkResponse(this, $api_container, $current_no, answer, QUESTIONS[CURRENT_QUESTION], $api_phrase, $api_container_responses, QUESTIONS, $api_container, $life);
+      };
+    });
+    $api_phrase.classList.remove("hidden");
+    document.querySelector(".answer_container.api_container").classList.remove("hidden");
+  
+  }, 650);  
 }
 
-async function allQuestions() {
+async function allQuestions(LIMIT) {
       // Solicitud GET (Request) from a quiz.
-      var response = await fetch('https://quizapi.io/api/v1/questions?difficult='+DIFFICULT+'&limit=10&tags=' + CATEGORY, {
+      var response = await fetch('https://quizapi.io/api/v1/questions?difficult='+DIFFICULT+'&limit='+ LIMIT +'&tags=' + CATEGORY, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
