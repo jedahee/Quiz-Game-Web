@@ -118,7 +118,7 @@
     min-width: 40%;
     width: 45%;
     padding-bottom: var(--padding-lg);
-    max-height: 556px;
+    max-height: 555px;
     overflow-y: auto;
 }
 
