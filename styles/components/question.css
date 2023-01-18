@@ -88,9 +88,6 @@
     transform-origin: right;
 }
 
-.response:hover, .response:focus {
-    transform: scale(1.2);
-}
 
 .response:hover::after, .response:focus::after {
     transform: scaleX(1);
@@ -102,7 +99,7 @@
     font-size: 2em;
 }
 
-.question_phrase.d-none, .response.hidden {
+.question_phrase.d-none, .category_phrase.d-none, .response.hidden {
     opacity: 0;
     transform: scale(0);
     pointer-events: none;
@@ -121,6 +118,8 @@
     min-width: 40%;
     width: 45%;
     padding-bottom: var(--padding-lg);
+    max-height: 556px;
+    overflow-y: auto;
 }
 
 .api_phrase {

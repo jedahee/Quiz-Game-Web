@@ -14,15 +14,15 @@
 <body class="body">
 
     <article class="heart-container hidden">
-        <img src="./assets/img/heart.png" alt="Life: ">
+        <img src="./assets/img/heart.png" alt="Life: " width="36px">
         <span class="life"></span>
     </article>
 
     <article class="no-questions-container hidden">
         <p class="no">
-           <span class="current-no">2</span>
+           <span class="current-no"></span>
            /
-           <span class="total-no">10</span> 
+           <span class="total-no"></span> 
         </p>
     </article>
 
@@ -31,6 +31,7 @@
     </header>
     
     <main class="main">
+        
         <h2 class="question_phrase diff_phrase">The chosen difficulty is <p class="word_to_resolve"></p></h2>
         <section class="answer_container diff_cont">
             <p tabindex="1" class="response easy">Easy</p>
@@ -40,13 +41,22 @@
 
         <h2 class="question_phrase category_phrase d-none">The category selected is <p class="word_to_resolve"></p></h2>
         <section class="answer_container category_cont">
-            <!--<p class="response">Response Text</p>-->
+            
         </section>
 
         <article class="game_container">
             <h2 class="question_phrase api_phrase"></h2>
             <section class="answer_container api_container">
             </section>
+        </article>
+        
+        <article class="final_panel hidden">
+            <img class="img-win hidden" src="./assets/icon/medal.png" width="165px">
+            <img class="img-defeat hidden" src="./assets/icon/game-over.png" width="165px">
+            <p></p>
+            <button class="restart_btn">
+                <img src="./assets/icon/refresh.svg" alt="Restart">
+            </button>
         </article>
     </main>
     <canvas class="background"></canvas>

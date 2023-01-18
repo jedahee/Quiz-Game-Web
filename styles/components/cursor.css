@@ -10,7 +10,7 @@
     border-radius: 50%;
     background-color: transparent;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     transition: top .6s ease-out, left .6s ease-out;
     transform: translate(-55%, -55%);
     animation: bound .7s alternate infinite;

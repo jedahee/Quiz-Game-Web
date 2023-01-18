@@ -13,3 +13,12 @@
 @import url(styles/components/main.css);
 @import url(styles/components/question.css);
 @import url(styles/components/float_containers.css);
+@import url(styles/components/final_panel.css);
+
+/* LAYOUT */
+@import url(styles/layout/header.css);
+@import url(styles/layout/title.css);
+@import url(styles/layout/main.css);
+@import url(styles/layout/question.css);
+@import url(styles/layout/float_containers.css);
+@import url(styles/layout/final_panel.css);
